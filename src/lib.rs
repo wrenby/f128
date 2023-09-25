@@ -7,10 +7,10 @@ pub use f128_internal::*;
 
 #[macro_export]
 macro_rules! f128 {
-    ($e:expr) => (f128_inner!($e));
-    ($f:expr, $($e:expr),+) => ((f128_inner!($f), $(f128_inner!($e)),+));
-    [$f:expr, $($e:expr),+] => ([f128_inner!($f), $(f128_inner!($e)),+]);
-    [$f:expr; $l:expr] => ([f128_inner!($f); $l]);
+    ($e:expr) => ($crate::f128_inner!($e));
+    ($f:expr, $($e:expr),+) => (($crate::f128_inner!($f), $($crate::f128_inner!($e)),+));
+    [$f:expr, $($e:expr),+] => ([$crate::f128_inner!($f), $($crate::f128_inner!($e)),+]);
+    [$f:expr; $l:expr] => ([$crate::f128_inner!($f); $l]);
 }
 
 
@@ -26,7 +26,7 @@ mod tests {
         assert_eq!(std::mem::align_of::<f128>(), 16);
     }
 
-    // Utility functions used to create constants in the form of byte arrays. 
+    // Utility functions used to create constants in the form of byte arrays.
     // Only made to run on little endian systems.
     #[cfg(target_endian = "little")]
     fn le_bytes(f: [u8; 16]) -> String {
@@ -121,10 +121,10 @@ mod tests {
         assert!(f128::NEG_INFINITY.is_infinite());
         assert!(!f128::NEG_INFINITY.is_finite());
         assert!(f128::NEG_INFINITY.is_sign_negative());
-        
+
         assert!(!f128::MAX.is_nan());
         assert!(f128::MAX.is_finite());
-        
+
         assert!(!f128::MIN.is_nan());
         assert!(f128::MIN.is_finite());
 
