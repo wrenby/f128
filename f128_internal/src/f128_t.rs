@@ -260,11 +260,6 @@ impl f128 {
     }
 }
 
-#[cfg(feature = "bytemuck")]
-unsafe impl bytemuck::Zeroable for f128 {}
-#[cfg(feature = "bytemuck")]
-unsafe impl bytemuck::Pod for f128 {}
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ParseF128Error {
     kind: F128ErrorKind,
